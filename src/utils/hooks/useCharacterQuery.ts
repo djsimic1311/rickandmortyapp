@@ -5,7 +5,9 @@ import { useDebounce } from "./useDebounce";
 import { useInView } from "react-intersection-observer";
 
 export const useCharacterQuery = () => {
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({
+		initialInView: true
+	});
 	const searchQueryRef = useRef<HTMLInputElement>(null);
 
 	const debounce = useDebounce();
