@@ -1,47 +1,33 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getToken } from "../utils/helpers";
+import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { SiteLayout } from "../core/layouts";
 import { Characters } from "../core/components/character-grid";
 import { getLocationById } from "../utils/api/locations";
+import { useAnonReroute } from "../utils/hooks/useReroute";
 
 export const LocationPage = () => {
-
-  const navigate = useNavigate();
+	useAnonReroute();
 
 	const { locationId } = useParams();
-
-	useEffect(() => {
-		const accessToken = getToken();
-
-		if (!accessToken) {
-			navigate("/login");
-		}
-	}, []);
 
 	const { status, data } = useQuery(["location", locationId], () =>
 		getLocationById(locationId)
 	);
 
-  return(
-    <SiteLayout>
-    {status === "loading" ? (
-      <div>Im Pickle Rick!</div>
-    ) : status === "error" ? (
-      <div>...</div>
-    ) : (
-      <>
-        <div>
-          <h2>{data?.data.name}</h2>
-          <p>Type: {data?.data.type}</p>
-          <p>Dimension: {data?.data.dimension}</p>
-          <h3>Residents</h3>
-          {data?.data.residents && (<Characters characterUrls={data?.data.residents} cacheId={locationId}/>)}
-        </div>
-      </>
-    )}
-  </SiteLayout>
-  )
-
-}
+	return (
+		<SiteLayout status={status}>
+			<div>
+				<h2>{data?.name}</h2>
+				<p>Type: {data?.type}</p>
+				<p>Dimension: {data?.dimension}</p>
+				<h3>Residents</h3>
+				{data?.residents && (
+					<Characters
+						characterUrls={data?.residents}
+						cacheId={locationId}
+					/>
+				)}
+			</div>
+		</SiteLayout>
+	);
+};

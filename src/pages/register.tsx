@@ -1,13 +1,12 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { AuthLayout } from "../core/layouts";
 import { H1 } from "../styles";
 import { AuthButton, AuthForm, AuthFormInput } from "../styles/auth";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { AuthFormData } from "../utils/types/auth";
-import { firebaseAuth } from "../utils/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getToken, setToken } from "../utils/helpers";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuthReroute } from "../utils/hooks/useReroute";
+import { useAuth } from "../utils/hooks/useAuth";
 
 export const RegisterPage: FunctionComponent = () => {
 
@@ -17,32 +16,13 @@ export const RegisterPage: FunctionComponent = () => {
 		formState: { errors },
 	} = useForm<AuthFormData>();
 
-  const navigate = useNavigate();
+  useAuthReroute();
 
-  useEffect(() => {
-    const accessToken = getToken();
-
-    if (accessToken) {
-      navigate('/characters')
-    }
-  }, [])
-
-	const onSubmit: SubmitHandler<AuthFormData> = ({email, password}) => {
-		createUserWithEmailAndPassword(firebaseAuth, email, password)
-    .then(({user}) => {
-      user.getIdToken().then((token) => {
-        setToken(token);
-        navigate('/characters');
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-	};
+	const { register: handleRegistration } = useAuth();
 
 	return (
 		<AuthLayout>
-			<AuthForm onSubmit={handleSubmit(onSubmit)}>
+			<AuthForm onSubmit={handleSubmit(handleRegistration)}>
 				<H1>Register</H1>
 				<label htmlFor="email">
 					Email*:

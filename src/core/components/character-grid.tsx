@@ -1,40 +1,27 @@
 import { FunctionComponent } from "react";
-import { useQuery } from "react-query";
-import { getMultipleCharactersByIds } from "../../utils/api/characters";
-import { getCharacterIdFromDataUrl } from "../../utils/helpers";
 import { GridContainer, CharacterCard } from "../../styles/site";
+import { CharactersPropsType } from "../../utils/types/core/components/characters-grid";
+import { useCharacterFormat } from "../../utils/hooks/useFormatCharacters";
+import { SiteLayout } from "../layouts";
 
-export const Characters: FunctionComponent<{
-	characterUrls: string[];
-  cacheId?: string
-}> = ({ characterUrls, cacheId = 0 }) => {
+export const Characters: FunctionComponent<CharactersPropsType> = ({
+	characterUrls,
+	cacheId = 0,
+}) => {
+	const { status, data } = useCharacterFormat(characterUrls, cacheId);
 
-	const characterIds = 
-		characterUrls.map((url) => getCharacterIdFromDataUrl(url))
-	;
-
-	const { status, data } = useQuery(
-		["characters", cacheId],
-		() => getMultipleCharactersByIds(characterIds),
-		{
-			enabled: !!characterIds,
-		}
-	);
-
-	return status === "loading" ? (
-		<div></div>
-	) : status === "error" ? (
-		<div></div>
-	) : (
-		<GridContainer>
-			{data?.data.map((baki: any) => {
-				return (
-					<CharacterCard key={baki.id} to={`/characters/${baki.id}`}>
-						<h2>{baki.name}</h2>
-						<img src={baki.image} alt="" />
-					</CharacterCard>
-				);
-			})}
-		</GridContainer>
+	return (
+		<SiteLayout status={status}>
+			<GridContainer>
+				{data?.map((baki: any) => {
+					return (
+						<CharacterCard key={baki.id} to={`/characters/${baki.id}`}>
+							<h2>{baki.name}</h2>
+							<img src={baki.image} alt="" />
+						</CharacterCard>
+					);
+				})}
+			</GridContainer>
+		</SiteLayout>
 	);
 };

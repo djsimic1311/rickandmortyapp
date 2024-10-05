@@ -1,7 +1,5 @@
 import axiosInstance from "../axios";
+import { EpisodeApiType } from "../types/api";
 
 export const getEpisodeById = (episodeId: number | string | undefined) =>
-  axiosInstance.get(`/episode/${episodeId}`)
-
-export const getEpisodesByIds = (episodeId: number[] | string[]) =>
-  axiosInstance.get(`/episode/${episodeId.toString()}`)
+  axiosInstance.get<EpisodeApiType>(`/episode/${episodeId}`).then(res => res.data)

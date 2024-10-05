@@ -1,13 +1,12 @@
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { AuthLayout } from "../core/layouts";
 import { H1 } from "../styles";
 import { AuthButton, AuthForm, AuthFormInput } from "../styles/auth";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { AuthFormData } from "../utils/types/auth";
-import { firebaseAuth } from "../utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { setToken, getToken } from "../utils/helpers";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuthReroute } from "../utils/hooks/useReroute";
+import { useAuth } from "../utils/hooks/useAuth";
 
 export const LoginPage: FunctionComponent = () => {
 	const {
@@ -16,32 +15,13 @@ export const LoginPage: FunctionComponent = () => {
 		formState: { errors },
 	} = useForm<AuthFormData>();
 
-  const navigate = useNavigate();
+	useAuthReroute();
 
-  useEffect(() => {
-    const accessToken = getToken();
-
-    if (accessToken) {
-      navigate('/characters')
-    }
-  }, [])
-
-	const onSubmit: SubmitHandler<AuthFormData> = ({ email, password }) => {
-		signInWithEmailAndPassword(firebaseAuth, email, password)
-			.then(({ user }) => {
-				user.getIdToken().then((token) => {
-					setToken(token);
-          navigate('/characters');
-				});
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
+	const { login } = useAuth();
 
 	return (
 		<AuthLayout>
-			<AuthForm onSubmit={handleSubmit(onSubmit)}>
+			<AuthForm onSubmit={handleSubmit(login)}>
 				<H1>LOGIN</H1>
 				<label htmlFor="email">
 					Email*:
