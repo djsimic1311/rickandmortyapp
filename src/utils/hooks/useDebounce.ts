@@ -15,7 +15,7 @@ export const useDebounce = () => {
 		}
 		timeoutRef.current = setTimeout(() => {
 			cbf();
-		}, 2000);
+		}, 1000);
 	};
 
 	return debounce;

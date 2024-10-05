@@ -13,11 +13,11 @@ export const Characters: FunctionComponent<CharactersPropsType> = ({
 	return (
 		<SiteLayout status={status}>
 			<GridContainer>
-				{data?.map((baki: any) => {
+				{data?.map((character) => {
 					return (
-						<CharacterCard key={baki.id} to={`/characters/${baki.id}`}>
-							<h2>{baki.name}</h2>
-							<img src={baki.image} alt="" />
+						<CharacterCard key={character.id} to={`/characters/${character.id}`}>
+							<h2>{character.name}</h2>
+							<img src={character.image} alt="" />
 						</CharacterCard>
 					);
 				})}

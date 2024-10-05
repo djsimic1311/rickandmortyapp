@@ -1,18 +1,12 @@
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
 import { SiteLayout } from "../core/layouts";
 import { Characters } from "../core/components/character-grid";
-import { getLocationById } from "../utils/api/locations";
 import { useAnonReroute } from "../utils/hooks/useReroute";
+import { useLocationQuery } from "../utils/hooks/useLocationQuery";
 
 export const LocationPage = () => {
 	useAnonReroute();
 
-	const { locationId } = useParams();
-
-	const { status, data } = useQuery(["location", locationId], () =>
-		getLocationById(locationId)
-	);
+	const { status, data, locationId } = useLocationQuery();
 
 	return (
 		<SiteLayout status={status}>

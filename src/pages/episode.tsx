@@ -1,18 +1,12 @@
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
-import { getEpisodeById } from "../utils/api/episodes";
 import { SiteLayout } from "../core/layouts";
 import { Characters } from "../core/components/character-grid";
 import { useAnonReroute } from "../utils/hooks/useReroute";
+import { useEpisodeQuery } from "../utils/hooks/useEpisodeQuery";
 
 export const EpisodePage = () => {
 	useAnonReroute();
 
-	const { episodeId } = useParams();
-
-	const { status, data } = useQuery(["episode", episodeId], () =>
-		getEpisodeById(episodeId)
-	);
+	const { status, data, episodeId } = useEpisodeQuery();
 
 	return (
 		<SiteLayout status={status}>

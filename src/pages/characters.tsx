@@ -1,44 +1,14 @@
 import { SiteLayout } from "../core/layouts";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment } from "react";
 import { CharacterCard, GridContainer } from "../styles/site";
-import { getAllCharacters } from "../utils/api/characters";
-import { useInfiniteQuery } from "react-query";
-import { useDebounce } from "../utils/hooks/useDebounce";
-import { useInView } from "react-intersection-observer";
 import { useAnonReroute } from "../utils/hooks/useReroute";
+import { useCharacterQuery } from "../utils/hooks/useCharacterQuery";
 
 export const CharactersPage = () => {
 	useAnonReroute();
-	const { ref, inView } = useInView();
-	const searchQueryRef = useRef<HTMLInputElement>(null);
 
-	const debounce = useDebounce();
-
-	const { status, data, refetch, fetchNextPage, hasNextPage } =
-		useInfiniteQuery(
-			"characters",
-			({ pageParam }) =>
-				getAllCharacters(searchQueryRef.current?.value, pageParam),
-			{
-				keepPreviousData: true,
-				getNextPageParam: (lastPage) =>
-					lastPage.info.next
-						? lastPage.info.next.split("=")[1]
-						: null,
-			}
-		);
-
-	const handleSearch = () => {
-		debounce(() => {
-			refetch();
-		});
-	};
-
-	useEffect(() => {
-		if (inView && hasNextPage) {
-			fetchNextPage();
-		}
-	}, [fetchNextPage, inView]);
+	const { data, status, searchQueryRef, handleSearch, ref } =
+		useCharacterQuery();
 
 	return (
 		<SiteLayout status={status}>
@@ -50,7 +20,7 @@ export const CharactersPage = () => {
 			<GridContainer>
 				{data?.pages.map((group, i) => (
 					<Fragment key={i}>
-						{group?.results.map((character: any) => {
+						{group?.results.map((character) => {
 							return (
 								<CharacterCard
 									key={character.id}

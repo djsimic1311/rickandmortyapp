@@ -1,19 +1,14 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SiteLayout } from "../core/layouts";
 import { Fragment } from "react";
 import { formatUrlFromData, getEpisodeIdFromDataUrl } from "../utils/helpers";
-import { useQuery } from "react-query";
-import { getSingleCharacterById } from "../utils/api/characters";
 import { useAnonReroute } from "../utils/hooks/useReroute";
+import { useCharacterSingleQuery } from "../utils/hooks/useCharacterSingleQuery";
 
 export const CharacterPage = () => {
 	useAnonReroute();
 
-	const { characterId } = useParams();
-
-	const { status, data } = useQuery("character", () =>
-		getSingleCharacterById(characterId)
-	);
+	const { status, data } = useCharacterSingleQuery();
 
 	return (
 		<SiteLayout status={status}>
