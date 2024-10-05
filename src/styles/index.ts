@@ -1,0 +1,1 @@
+export { GlobalStyles, PageWrapper, H1, HeaderContainer } from "./globalStyledComponents";
