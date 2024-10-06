@@ -8,8 +8,7 @@ export const Header: FunctionComponent = () => {
 
 	return (
 		<HeaderContainer>
-			<H1>Rick and Morty App</H1>
-
+			<Link to={'/characters'}><H1>Rick and Morty App</H1></Link>
 			<nav>
 				<Link to={"/characters"}>Characters</Link>
 				<button onClick={logout}>Sign out</button>

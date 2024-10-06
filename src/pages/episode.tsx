@@ -12,8 +12,8 @@ export const EpisodePage = () => {
 		<SiteLayout status={status}>
 			<div>
 				<h2>{data?.name}</h2>
-				<p>Episode: {data?.episode}</p>
-				<p>Air date: {data?.air_date}</p>
+				<p><b>Episode:</b> {data?.episode}</p>
+				<p><b>Air date:</b> {data?.air_date}</p>
 				<h3>Characters in this episode</h3>
 				{data?.characters && (
 					<Characters

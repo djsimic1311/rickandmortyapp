@@ -28,3 +28,10 @@ export const CharacterCard = styled(Link)`
   }
   cursor: pointer;
 `
+
+export const SearchInput = styled.input`
+  font-size: 1.1rem;
+  padding: .5rem;
+  border: 1px solid #a8a8a8;
+  border-radius: 6px;
+`

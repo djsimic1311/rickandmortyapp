@@ -12,8 +12,8 @@ export const LocationPage = () => {
 		<SiteLayout status={status}>
 			<div>
 				<h2>{data?.name}</h2>
-				<p>Type: {data?.type}</p>
-				<p>Dimension: {data?.dimension}</p>
+				<p><b>Type:</b> {data?.type}</p>
+				<p><b>Dimension</b>: {data?.dimension}</p>
 				<h3>Residents</h3>
 				{data?.residents && (
 					<Characters

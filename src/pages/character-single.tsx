@@ -15,23 +15,23 @@ export const CharacterPage = () => {
 			<div>
 				<h2>{data?.name}</h2>
 				<img src={data?.image} alt="" />
-				<p>Status: {data?.status}</p>
-				<p>Species: {data?.species}</p>
-				<p>Gender: {data?.gender}</p>
+				<p><b>Status:</b> {data?.status}</p>
+				<p><b>Species:</b> {data?.species}</p>
+				<p><b>Gender:</b> {data?.gender}</p>
 				<p>
-					Origin:{" "}
+					<b>Origin:</b>{" "}
 					<Link to={formatUrlFromData(data?.origin.url)}>
 						{data?.origin.name}
 					</Link>
 				</p>
 				<p>
-					Location:{" "}
+					<b>Location:</b>{" "}
 					<Link to={formatUrlFromData(data?.location.url)}>
 						{data?.location.name}
 					</Link>
 				</p>
 				<p>
-					Episodes:{" "}
+					<b>Episodes:</b>{" "}
 					{data?.episode.map((episode: string) => (
 						<Fragment key={getEpisodeIdFromDataUrl(episode)}>
 							<Link to={formatUrlFromData(episode)}>

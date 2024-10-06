@@ -50,3 +50,7 @@ export interface EpisodeApiType {
   url: string,
   created: string
 }
+
+export interface ApiError {
+  error: string;
+}

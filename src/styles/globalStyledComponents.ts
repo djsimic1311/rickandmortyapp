@@ -54,21 +54,44 @@ export const H1 = styled.h1`
 
 export const HeaderContainer = styled.header`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  h1 {
-    margin: 0;
-  }
+  position: relative;
   padding: 1.5rem;
   nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem
+    gap: 1rem;
+    position: absolute;
+    top: .75rem;
+    right: 1.5rem;
+  }
+  @media (${breakpoints.tablet}) {
+    padding: 2rem;
+    nav {
+      top: 1rem;
+      right: 2rem;
+    }
+  }
+  @media (${breakpoints.laptop}) {
+    padding: 3rem;
+    nav {
+      top: 3rem;
+      right: 3rem;
+    }
+  }
+  @media (${breakpoints.desktop}) {
+    padding: 4rem;
+    nav {
+      top: 4rem;
+      right: 4rem;
+    }
   }
   a {
     color: black;
     font-size: 1.5rem;
+    font-weight: 700;
     text-decoration: none;
     &:hover {
       cursor: pointer;
@@ -81,6 +104,8 @@ export const HeaderContainer = styled.header`
     text-decoration: none;
     background-color: transparent;
     border: none;
+    font-weight: 700;
+    padding: 0;
     &:hover {
       cursor: pointer;
       text-decoration: underline;

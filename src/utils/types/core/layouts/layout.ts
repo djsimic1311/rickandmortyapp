@@ -6,5 +6,6 @@ export interface LayoutType {
 
 export interface SiteLayoutPropsType {
   status: string,
-  children: ReactNode
+  children: ReactNode,
+  wrap?: boolean,
 }

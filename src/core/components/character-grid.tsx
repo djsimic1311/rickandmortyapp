@@ -11,7 +11,7 @@ export const Characters: FunctionComponent<CharactersPropsType> = ({
 	const { status, data } = useCharacterFormat(characterUrls, cacheId);
 
 	return (
-		<SiteLayout status={status}>
+		<SiteLayout status={status} wrap={false}>
 			<GridContainer>
 				{data?.map((character) => {
 					return (
